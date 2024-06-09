@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Chat App</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script>
+    const socket = io();
+
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    socket.on('message', (data) => {
+      const messageContainer = document.getElementById('messages');
+      const newMessage = document.createElement('div');
+      newMessage.classList.add('p-2', 'bg-light', 'rounded', 'mb-2');
+      newMessage.textContent = `${data.message}`;
+      messageContainer.appendChild(newMessage);
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    });
+
+    const sendMessage = () => {
+      const messageInput = document.getElementById('message');
+      const message = messageInput.value;
+      socket.emit('message', message);
+      messageInput.value = '';
+    };
+  </script>
+</head>
+
+<body class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header bg-primary text-white">Chat App</div>
+        <div class="card-body">
+          <div id="messages" class="mb-3" style="max-height: 300px; overflow-y: auto;"></div>
+          <div class="input-group">
+            <input id="message" type="text" class="form-control" placeholder="Enter message">
+            <div class="input-group-append">
+              <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+</html>
+
+</html>

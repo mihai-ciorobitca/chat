@@ -13,9 +13,8 @@ app.use(session({
     saveUninitialized: true,
 }));
 
-const mainRoutes = require('./routes/main');
-
-app.use('/', mainRoutes);
+// const mainRoutes = require('./routes/main');
+// app.use('/', mainRoutes);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

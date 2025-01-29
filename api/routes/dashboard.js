@@ -1,8 +1,23 @@
 const express = require("express");
 const router = express.Router();
+const session = require("express-session");
+
+router.use(express.json());
+
+router.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 
 router.get('/', async (req, res) => {
-    return res.render('dashboard');
+    if (req.session.user) {
+        return res.render('dashboard', { data: req.session.data });
+    } else if (req.session.admin) {
+        return res.redirect('/admin');
+    }
+    return res.redirect("/login");
 });
 
 module.exports = router;

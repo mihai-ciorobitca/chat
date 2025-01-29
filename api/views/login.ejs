@@ -7,8 +7,8 @@
     <title>Login Page</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <style>
         body {
             background: linear-gradient(45deg, #6a11cb, #2575fc);
@@ -62,10 +62,9 @@
         </div>
     </div>
     <script>
-        const SUPABASE_URL = "https://adyyoquqtlopdnqampep.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
-
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabaseUrl = "https://adyyoquqtlopdnqampep.supabase.co"
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs"
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         $(document).ready(() => {
             $("#form").on("submit", async (event) => {
@@ -74,33 +73,49 @@
                 const email = $("#email").val();
                 const password = $("#password").val();
 
-                if (email == "admin@mail.com") {
-                    const response = await fetch("/admin", {
+                if (email === "admin@mail.com") {
+                    const response = await fetch("/login", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            password
+                            email: email,
+                            password: password,
+                            type: "admin"
                         })
                     });
                     const data = await response.json();
                     if (!response.ok) {
                         alert(data.message);
                     } else {
-                        $(location).prop("href", "/admin");
+                        $(location).prop("href", data.message);
                     }
                 } else {
-                    const { data, error } = await supabaseClient.auth.signInWithPassword(
-                        {
-                            email: email,
-                            password: password
-                        }
-                    )
+                    const { user, error } = await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
                     if (error) {
-                        alert(error.message)
+                        alert(error.message);
                     } else {
-                        $(location).prop("href", "/dashboard");
+                        const response = await fetch("/login", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                type: "user"
+                            })
+                        });
+                        const data = await response.json();
+                        console.log(data);
+                        if (!response.ok) {
+                            alert(data.message);
+                        } else {
+                            //$(location).prop("href", data.message);
+                        }
                     }
                 }
             });

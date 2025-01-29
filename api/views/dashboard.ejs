@@ -32,6 +32,12 @@
                     const response = await fetch("/logout", {
                         method: "POST"
                     });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        alert(data.message);
+                    } else {
+                        $(location).prop("href", data.message);
+                    }
                 }
             }
 

@@ -39,8 +39,11 @@ app.get('/', async (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-    req.session.destroy((err) => {
-        res.redirect("/login");
+    req.session.destroy((error) => {
+        if(error) {
+            return res.status(400).json({message: error});
+        }
+        return res.status(200).json({message: "/login"});
     });
 })
 

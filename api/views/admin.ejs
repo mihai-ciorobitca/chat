@@ -5,51 +5,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
-<body>
-    <h1>Admin Dashboard</h1>
-    <h2>Users List</h2>
-    <ul>
-        <% users.forEach(user=> { %>
-            <li>
-                <%= user.email %>
-                    <form class="delete-form" data-user-id="<%= user.id %>">
-                        <button type="submit">Delete</button>
-                    </form>
-            </li>
-        <% }) %>
-    </ul>
-    <form action="/logout" method="POST">
-        <button type="submit">Logout</button>
-    </form>
+<body class="bg-light d-flex flex-column" style="height: 100vh; margin: 0;">
+
+    <div class="container-fluid flex-grow-1">
+        <div class="sticky-top mb-3 mt-3 bg-white p-3">
+            <input class="form-control" type="text" placeholder="Search" id="search-input">
+        </div>
+
+        <!-- Card Layout for Mobile -->
+        <div class="d-md-none">
+            <% users.forEach(user=> { %>
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-primary">
+                            Username: <%= user.email.split("@")[0] %>
+                        </h5>
+                        <p class="card-title text-center text-secondary">
+                            Domain: <%= user.email.split("@")[1] %>
+                        </p>
+                        <p class="card-title text-center">
+                            Status: <span
+                                class="<%= user.user_metadata.email_verified ? 'text-success' : 'text-danger' %>">
+                                <%= user.user_metadata.email_verified ? 'Confirmed' : 'Unconfirmed' %>
+                            </span>
+                        </p>
+                        <form class="delete-form" data-user-id="<%= user.id %>">
+                            <button type="submit" class="btn btn-outline-danger w-100">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+
+
+        <!-- Table Layout for Larger Screens -->
+        <div class="table-responsive d-none d-md-block">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user=> { %>
+                        <tr>
+                            <td class="text-center">
+                                <%= user.email %>
+                            </td>
+                            <td class="text-center">
+                                <%= user.user_metadata.email_verified ? 'Confirmed' : 'Unconfirmed' %>
+                            </td>
+                            <td class="text-center">
+                                <form class="delete-form" data-user-id="<%= user.id %>">
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i>
+                                        Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
-        $(document).ready(() => {
-            $(".delete-form").on("submit", async (event) => {
-                event.preventDefault();
-                const form = event.currentTarget; 
-                const id = $(form).data("user-id");
-                console.log(id);
-                const response = await fetch("/admin/delete-user", {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        id
-                    })
-                });
-                const data = await response.json();
-                if (!response.ok) {
-                    alert(data.message);
-                } else {
-                    $(event.target).closest("li").remove();
-                }
+        const searchInput = document.getElementById('search-input');
+        const cards = document.querySelectorAll('.card');
+        const tableRows = document.querySelectorAll('.table tbody tr');
+        searchInput.addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+
+            // For card view
+            cards.forEach(card => {
+                const username = card.querySelector('.card-title').innerText.toLowerCase();
+                card.style.display = username.includes(searchValue) ? 'block' : 'none';
+            });
+
+            // For table view
+            tableRows.forEach(row => {
+                const username = row.cells[0].innerText.toLowerCase();
+                row.style.display = username.includes(searchValue) ? '' : 'none';
             });
         });
 
+        $(".delete-form").on("submit", async (event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const id = $(form).data("user-id");
+            const confirmed = confirm("Are you sure you want to delete this user?");
+            if (!confirmed) {
+                return;
+            }
+            const response = await fetch("/admin/delete-user", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id
+                })
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                alert(data.message);
+            } else {
+                // Remove the card element if it's in card view
+                $(event.target).closest(".card").remove();
+                // Remove the table row if it's in table view
+                $(event.target).closest("tr").remove();
+            }
+        });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.11/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

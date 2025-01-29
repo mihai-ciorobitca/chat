@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
             console.log(error);
             return res.status(500).json({message: error.message});
         }
+        console.log(users);
         return res.render('admin', { users });
     }
     return res.redirect("/login");

@@ -52,8 +52,10 @@
                 <div class="form-group">
                     <div class="g-recaptcha" data-sitekey="6LdxqMYqAAAAAEV2xyjDTMQ1W0NkkSwEZ1Zs2uD3"></div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i>
-                    Register</button>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-user-plus"></i>
+                    Register
+                </button>
             </form>
             <div class="text-center mt-3">
                 <a href="/login" class="btn btn-link">Already have an account? Login</a>
@@ -65,6 +67,8 @@
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        
 
         $(document).ready(() => {
             $("#form").on("submit", async (event) => {
@@ -79,10 +83,26 @@
                     return;
                 }
 
+                const response = await fetch("/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        recaptchaResponse
+                    })
+                });
+
+                if (!response.ok) {
+                    alert("Please complete the reCAPTCHA");
+                    return;
+                }
+
                 const { data, error } = await supabaseClient.auth.signUp({
                     email: email,
                     password: password
                 });
+                
                 if (error) {
                     alert(error.message);
                 } else {

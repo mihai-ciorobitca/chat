@@ -11,19 +11,36 @@
 
 <body>
     <p>"<%= data %>"</p>
-    <form action="/logout" method="POST">
+    <form id="form">
         <button type="submit">Logout</button>
     </form>
     <script>
         $(document).ready(async () => {
-            SUPABASE_URL = "https://adyyoquqtlopdnqampep.supabase.co"
-            SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs"
-
+            const SUPABASE_URL = "https://adyyoquqtlopdnqampep.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
+            
             const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            const { data, error } = await supabaseClient.auth.getSession()
-            console.log(data);
-        })
+            // Function to handle logout
+            async function handleLogout() {
+                // Delete session from Supabase
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) {
+                    console.error('Error signing out:', error);
+                } else {
+                    console.log('Signed out successfully');
+                    const response = await fetch("/logout", {
+                        method: "POST"
+                    });
+                }
+            }
+
+            // Attach event listener to the form submission
+            $('#form').submit((event) => {
+                event.preventDefault();
+                handleLogout();
+            });
+        });
     </script>
 </body>
 

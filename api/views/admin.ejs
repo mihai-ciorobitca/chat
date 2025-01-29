@@ -1,20 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <h1>Admin Dashboard</h1>
     <h2>Users List</h2>
     <ul>
-        <% users.forEach(user => { %>
-            <li><%= user.email %> <%= user.id %></li>
+        <% users.forEach(user=> { %>
+            <li>
+                <%= user.email %>
+                    <form class="delete-form" data-user-id="<%= user.id %>">
+                        <button type="submit">Delete</button>
+                    </form>
+            </li>
         <% }) %>
     </ul>
     <form action="/logout" method="POST">
         <button type="submit">Logout</button>
     </form>
+    <script>
+        $(document).ready(() => {
+            $(".delete-form").on("submit", async (event) => {
+                event.preventDefault();
+                const form = event.currentTarget; 
+                const id = $(form).data("user-id");
+                console.log(id);
+                const response = await fetch("/admin/delete-user", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        id
+                    })
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    alert(data.message);
+                } else {
+                    $(event.target).closest("li").remove();
+                }
+            });
+        });
+
+    </script>
 </body>
+
 </html>

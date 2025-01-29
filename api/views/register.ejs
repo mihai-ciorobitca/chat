@@ -5,47 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <style>
+        body {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
-<body>
-    <form id="form">
-        <h1>Register</h1>
-        <label for="email">Email</label>
-        <input id="email" placeholder="email" type="email" required />
-        <label for="password">Password</label>
-        <input id="password" placeholder="password" type="password" required />
-        <button type="submit">Register</button>
-    </form>
+<body class="bg-light">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+            <form id="form">
+                <h1 class="text-center mb-4"><i class="fas fa-user-plus"></i> Register</h1>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input id="email" class="form-control" placeholder="email" type="email" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input id="password" class="form-control" placeholder="password" type="password" maxlength="16"
+                            required />
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-eye" id="togglePassword"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i>
+                    Register</button>
+            </form>
+            <button class="g-recaptcha" data-sitekey="6LeepsYqAAAAAMA24c5MywzwBmFn3dwRMWpANXNL" data-callback='onSubmit'
+                data-action='submit'>Submit</button>
+            <div class="text-center mt-3">
+                <a href="/login" class="btn btn-link">Already have an account? Login</a>
+            </div>
+        </div>
+    </div>
     <script>
         const SUPABASE_URL = "https://adyyoquqtlopdnqampep.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
 
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-        console.log(supabaseClient);
-
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         $(document).ready(() => {
             $("#form").on("submit", async (event) => {
                 event.preventDefault();
-                
+
                 const email = $("#email").val();
                 const password = $("#password").val();
 
-                const { data, error } = await supabaseClient.auth.signUp(
-                    {
-                        email: email,
-                        password: password
-                    }
-                )
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password
+                });
                 if (error) {
-                    alert(error);
+                    alert(error.message);
                 } else {
                     console.log(data);
-                    //$(location).prop("href", "/login")
+                    $(location).prop("href", "/login");
                 }
+            });
+
+            // Toggle password visibility
+            $("#togglePassword").click(function () {
+                const type = $("#password").attr("type") === "password" ? "text" : "password";
+                $("#password").attr("type", type);
+                $(this).toggleClass("fa-eye fa-eye-slash");
             });
         });
     </script>

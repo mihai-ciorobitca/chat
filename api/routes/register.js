@@ -7,6 +7,8 @@ const SECRET_CAPTCHA_KEY = process.env.SECRET_CAPTCHA_KEY;
 
 const router = express.Router();
 
+router.use(express.json());
+
 router.get("/", (req, res) => {
     res.render("register");
 });

@@ -42,16 +42,16 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                         </div>
-                        <input id="password" class="form-control" placeholder="password" type="password" maxlength="16" required />
+                        <input id="password" class="form-control" placeholder="password" type="password" maxlength="16"
+                            required />
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-eye" id="togglePassword"></i></span>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="g-recaptcha" data-sitekey="6LdxqMYqAAAAAEV2xyjDTMQ1W0NkkSwEZ1Zs2uD3"></div>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i> Register</button>
+                <div class="g-recaptcha" data-sitekey="6LdxqMYqAAAAAEV2xyjDTMQ1W0NkkSwEZ1Zs2uD3" data-size="compact"></div>
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i>
+                    Register</button>
             </form>
             <div class="text-center mt-3">
                 <a href="/login" class="btn btn-link">Already have an account? Login</a>
@@ -95,8 +95,6 @@
                 $("#password").attr("type", type);
                 $(this).toggleClass("fa-eye fa-eye-slash");
             });
-
-            $('.g-recapatcha').attr('data-size','compact');
         });
     </script>
 </body>

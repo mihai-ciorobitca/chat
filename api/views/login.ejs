@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <form id="form">
+        <h1>Login</h1>
+        <label for="email">Email</label>
+        <input id="email" placeholder="email" type="email" required />
+        <label for="password">Password</label>
+        <input id="password" placeholder="password" type="password" required />
+        <button type="submit">Login</button>
+    </form>
+    <script>
+        const SUPABASE_URL = "https://adyyoquqtlopdnqampep.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        $(document).ready(() => {
+            $("#form").on("submit", async (event) => {
+                event.preventDefault();
+
+                const email = $("#email").val();
+                const password = $("#password").val();
+
+                if (email == "admin@mail.com") {
+                    const response = await fetch("/admin", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            password
+                        })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        alert(data.message);
+                    } else {
+                        $(location).prop("href", "/admin");
+                    }
+                } else {
+                    const { data, error } = await supabaseClient.auth.signInWithPassword(
+                        {
+                            email: email,
+                            password: password
+                        }
+                    )
+                    if (error) {
+                        alert(error.message)
+                    } else {
+                        $(location).prop("href", "/dashboard");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

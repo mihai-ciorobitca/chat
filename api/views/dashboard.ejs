@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@latest"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const SUPABASE_URL = "https://adyyoquqtlopdnqampep.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
+
+        async function checkSession() {
+            console.log(1);
+            const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            const { data, error } = await supabaseClient.auth.getSession();
+            console.log(1);
+            console.log(data);
+            if (error || data.session === null) {
+                $(location).prop("href", "/login");
+            } else {
+                $("body").css("display", "block");
+            }
+        }
+        checkSession();
+
+    </script>
+    <style>
+        body {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="logout">Logout</button>
+    <script>
+        $(document).ready(() => {
+            const SUPABASE_URL = "https://adyyoquqtlopdnqampep.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
+
+            const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            $("#logout").on("click", async (event) => {
+                const { error } = await supabaseClient.auth.signOut()
+
+                if (error) {
+                    alert(error);
+                } else {
+                    $(location).prop("href", "/login")
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

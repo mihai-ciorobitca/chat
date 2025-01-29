@@ -1,6 +1,5 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const fetch = require("node-fetch");
 
 dotenv.config();
 
@@ -16,6 +15,7 @@ router.get("/", (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
+        const fetch = (await import("node-fetch")).default;
         const secretKey = SECRET_CAPTCHA_KEY;
         const { recaptchaResponse } = req.body;
         const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {

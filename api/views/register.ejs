@@ -68,7 +68,7 @@
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        
+
 
         $(document).ready(() => {
             $("#form").on("submit", async (event) => {
@@ -98,18 +98,18 @@
                 if (!response.ok) {
                     alert("Please complete the reCAPTCHA");
                     return;
-                }
-
-                const { data, error } = await supabaseClient.auth.signUp({
-                    email: email,
-                    password: password
-                });
-                
-                if (error) {
-                    alert(error.message);
                 } else {
-                    console.log(data);
-                    $(location).prop("href", "/login");
+                    const { data, error } = await supabaseClient.auth.signUp({
+                        email: email,
+                        password: password
+                    });
+
+                    if (error) {
+                        alert(error.message);
+                    } else {
+                        console.log(data);
+                        $(location).prop("href", "/login");
+                    }
                 }
             });
 

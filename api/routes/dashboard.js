@@ -20,4 +20,11 @@ router.get('/', async (req, res) => {
     return res.redirect("/login");
 });
 
+router.get("/courses", async (req, res) => {
+    if (req.session.user) {
+        return res.render("courses");
+    }   
+    return res.redirect("/login");
+});
+
 module.exports = router;

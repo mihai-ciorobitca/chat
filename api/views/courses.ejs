@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,6 +11,7 @@
         body {
             background-color: #1a202c;
             color: #ffffff;
+            font-weight: bold;
         }
 
         .card {
@@ -35,12 +35,14 @@
             background-color: #ffd700;
             border-color: #ffd700;
             color: #000000;
+            font-weight: bold;
         }
 
         .btn-primary:hover {
-            background-color: #000000;
-            border-color: #000000;
-            color: #ffd700;
+            border-color: #ffd700;
+            background-color: #ffd700;
+            color: #000000;
+            font-weight: bold;
         }
 
         .icon {
@@ -48,23 +50,35 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-weight: bold;
         }
 
         .search-form {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             margin-top: 2rem;
             margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background-color: #1a202c;
         }
 
         .search-input {
             width: 100%;
+            font-weight: bold;
         }
 
-        .search-icon {
-            font-size: 1.5rem;
-            margin-right: 0.5rem;
+        .scrollable {
+            overflow-y: auto;
+            max-height: 80vh;
+            scrollbar-width: none;
+        }
+
+        .scrollable::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
         }
     </style>
     <title>Courses</title>
@@ -87,11 +101,16 @@
 
 <body>
     <div class="container mt-2">
-        <div class="search-form">
+        <div class="search-form input-group mb-3">
+            <a href="/dashboard" class="btn btn-primary d-flex align-items-center">
+                <i class="bi bi-house-fill me-1"></i>
+                <span>Home</span>
+            </a>
             <input type="search" class="form-control search-input" placeholder="Search courses"
                 oninput="searchCourses()">
         </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 scrollable">
+            <% for (let i = 0; i < 10; i++) { %>
             <div class="col">
                 <div class="card h-100">
                     <div class="card-body d-flex">
@@ -99,8 +118,8 @@
                             <i class="bi bi-pencil-square icon"></i>
                         </div>
                         <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Content Creation</h5>
-                            <p class="card-text">Learn how to use AI to create engaging content for your business.</p>
+                            <h5 class="card-title"><strong>Content Creation</strong></h5>
+                            <p class="card-text"><strong>Learn how to use AI to create engaging content for your business.</strong></p>
                         </div>
                     </div>
                     <div class="mt-3 mx-2">
@@ -112,7 +131,7 @@
                     <div class="card-footer mt-3 text-end">
                         <a href="#" class="btn btn-primary">
                             <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
+                            <strong>Enter Course</strong>
                         </a>
                     </div>
                 </div>
@@ -124,9 +143,9 @@
                             <i class="bi bi-people-fill icon"></i>
                         </div>
                         <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Social Media Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your social media presence and engage
-                                with your audience.</p>
+                            <h5 class="card-title"><strong>Social Media Management</strong></h5>
+                            <p class="card-text"><strong>Learn how to use AI to manage your social media presence and engage
+                                    with your audience.</strong></p>
                         </div>
                     </div>
                     <div class="mt-3 mx-2">
@@ -138,7 +157,7 @@
                     <div class="card-footer mt-3 text-end">
                         <a href="#" class="btn btn-primary">
                             <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
+                            <strong>Enter Course</strong>
                         </a>
                     </div>
                 </div>
@@ -150,9 +169,9 @@
                             <i class="bi bi-robot icon"></i>
                         </div>
                         <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Chat Bot</h5>
-                            <p class="card-text">Learn how to use AI to create a chat bot that can help you automate
-                                tasks and improve customer service.</p>
+                            <h5 class="card-title"><strong>Chat Bot</strong></h5>
+                            <p class="card-text"><strong>Learn how to use AI to create a chat bot that can help you automate
+                                    tasks and improve customer service.</strong></p>
                         </div>
                     </div>
                     <div class="mt-3 mx-2">
@@ -164,7 +183,7 @@
                     <div class="card-footer mt-3 text-end">
                         <a href="#" class="btn btn-primary">
                             <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
+                            <strong>Enter Course</strong>
                         </a>
                     </div>
                 </div>
@@ -176,9 +195,9 @@
                             <i class="bi bi-person-badge-fill icon"></i>
                         </div>
                         <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Lead Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your leads and improve your sales
-                                process.</p>
+                            <h5 class="card-title"><strong>Lead Management</strong></h5>
+                            <p class="card-text"><strong>Learn how to use AI to manage your leads and improve your sales
+                                    process.</strong></p>
                         </div>
                     </div>
                     <div class="mt-3 mx-2">
@@ -190,530 +209,14 @@
                     <div class="card-footer mt-3 text-end">
                         <a href="#" class="btn btn-primary">
                             <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
+                            <strong>Enter Course</strong>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-pencil-square icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Content Creation</h5>
-                            <p class="card-text">Learn how to use AI to create engaging content for your business.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100">60%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-people-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Social Media Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your social media presence and engage
-                                with your audience.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80"
-                                aria-valuemin="0" aria-valuemax="100">80%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-robot icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Chat Bot</h5>
-                            <p class="card-text">Learn how to use AI to create a chat bot that can help you automate
-                                tasks and improve customer service.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">50%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-person-badge-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Lead Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your leads and improve your sales
-                                process.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                                aria-valuemin="0" aria-valuemax="100">70%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-pencil-square icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Content Creation</h5>
-                            <p class="card-text">Learn how to use AI to create engaging content for your business.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100">60%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-people-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Social Media Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your social media presence and engage
-                                with your audience.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80"
-                                aria-valuemin="0" aria-valuemax="100">80%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-robot icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Chat Bot</h5>
-                            <p class="card-text">Learn how to use AI to create a chat bot that can help you automate
-                                tasks and improve customer service.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">50%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-person-badge-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Lead Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your leads and improve your sales
-                                process.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                                aria-valuemin="0" aria-valuemax="100">70%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-pencil-square icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Content Creation</h5>
-                            <p class="card-text">Learn how to use AI to create engaging content for your business.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100">60%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-people-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Social Media Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your social media presence and engage
-                                with your audience.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80"
-                                aria-valuemin="0" aria-valuemax="100">80%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-robot icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Chat Bot</h5>
-                            <p class="card-text">Learn how to use AI to create a chat bot that can help you automate
-                                tasks and improve customer service.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">50%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-person-badge-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Lead Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your leads and improve your sales
-                                process.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                                aria-valuemin="0" aria-valuemax="100">70%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-pencil-square icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Content Creation</h5>
-                            <p class="card-text">Learn how to use AI to create engaging content for your business.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100">60%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-people-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Social Media Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your social media presence and engage
-                                with your audience.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80"
-                                aria-valuemin="0" aria-valuemax="100">80%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-robot icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Chat Bot</h5>
-                            <p class="card-text">Learn how to use AI to create a chat bot that can help you automate
-                                tasks and improve customer service.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">50%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-person-badge-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Lead Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your leads and improve your sales
-                                process.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                                aria-valuemin="0" aria-valuemax="100">70%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-pencil-square icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Content Creation</h5>
-                            <p class="card-text">Learn how to use AI to create engaging content for your business.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100">60%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-people-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Social Media Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your social media presence and engage
-                                with your audience.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80"
-                                aria-valuemin="0" aria-valuemax="100">80%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-robot icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Chat Bot</h5>
-                            <p class="card-text">Learn how to use AI to create a chat bot that can help you automate
-                                tasks and improve customer service.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">50%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex">
-                        <div class="col-4 flex-shrink-0 me-3 d-flex justify-content-center align-items-center">
-                            <i class="bi bi-person-badge-fill icon"></i>
-                        </div>
-                        <div class="col-8 flex-grow-1">
-                            <h5 class="card-title">Lead Management</h5>
-                            <p class="card-text">Learn how to use AI to manage your leads and improve your sales
-                                process.</p>
-                        </div>
-                    </div>
-                    <div class="mt-3 mx-2">
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                                aria-valuemin="0" aria-valuemax="100">70%</div>
-                        </div>
-                    </div>
-                    <div class="card-footer mt-3 text-end">
-                        <a href="#" class="btn btn-primary">
-                            <i class="bi bi-arrow-right me-2"></i>
-                            Enter Course
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
     </div>
-</body>
 
-</html>
 
 

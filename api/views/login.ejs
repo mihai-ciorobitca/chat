@@ -60,9 +60,8 @@
                 <div class="form-group">
                     <div id="g_id_onload"
                         data-client_id="103267855095-qpsrnpn54ro0shu61aa969ur1nib70om.apps.googleusercontent.com"
-                        data-context="signin" data-ux_mode="redirect"
-                        data-login_uri="https://adyyoquqtlopdnqampep.supabase.co/auth/v1/callback"
-                        data-callback="handleSignInWithGoogle" data-close_on_tap_outside="false"
+                        data-context="signin" data-ux_mode="popup"
+                        data-login_uri="https://the-real-world-rho.vercel.app/login" data-close_on_tap_outside="false"
                         data-itp_support="false">
                     </div>
 
@@ -141,13 +140,6 @@
                 $("#password").attr("type", type);
                 $(this).toggleClass("fa-eye fa-eye-slash");
             });
-
-            async function handleSignInWithGoogle(response) {
-                const { data, error } = await supabase.auth.signInWithIdToken({
-                    provider: 'google',
-                    token: response.credential,
-                })
-            }
 
         });
     </script>

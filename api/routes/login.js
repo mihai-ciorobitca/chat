@@ -21,10 +21,7 @@ router.get("/", (req, res) => {
 router.post("/", async (req, res) => {
     const { email, password, type } = req.body;
 
-    if (type === "google") {
-        req.session.user = true;
-        res.status(200).json({ message: "/dashboard" });
-    } else if (type == "user") {
+    if (type == "user") {
         req.session.user = true;
         res.status(200).json({ message: "/dashboard" });
     } else if (email === "admin@mail.com" && password === process.env.ADMIN_PASSWORD) {

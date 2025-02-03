@@ -57,16 +57,6 @@
                     <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i>
                         Login</button>
                 </div>
-                <div id="g_id_onload"
-                    data-client_id="103267855095-qpsrnpn54ro0shu61aa969ur1nib70om.apps.googleusercontent.com"
-                    data-context="signin" data-ux_mode="popup"
-                    data-login_uri="https://the-real-world-rho.vercel.app/login" data-close_on_tap_outside="false"
-                    data-itp_support="false">
-                </div>
-
-                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-                    data-text="signin_with" data-size="large" data-locale="en-GB" data-logo_alignment="left">
-                </div>
                 <div class="text-center mt-3">
                     <a href="/register" class="btn btn-link">Don't have an account? Register</a>
                 </div>
@@ -78,29 +68,15 @@
         const supabaseUrl = "https://adyyoquqtlopdnqampep.supabase.co"
         const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs"
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
         $(document).ready(() => {
-            // Google Sign-In callback
-            window.onGoogleSignIn = (googleUser) => {
-                const profile = googleUser.getBasicProfile();
-                const email = profile.getEmail();
-                const token = googleUser.getAuthResponse().id_token;
-
-                // Set the hidden input value
-                $("#loginType").val("google");
-
-                // Submit the form with Google sign-in data
-                $("#form").submit();
-            };
-
             $("#form").on("submit", async (event) => {
                 event.preventDefault();
 
                 const email = $("#email").val();
                 const password = $("#password").val();
-                const loginType = $("#loginType").val();
 
-                if (loginType === "google") {
-                    // Handle Google sign-in
+                if (email === "admin@mail.com") {
                     const response = await fetch("/login", {
                         method: "POST",
                         headers: {
@@ -108,7 +84,8 @@
                         },
                         body: JSON.stringify({
                             email: email,
-                            type: "google"
+                            password: password,
+                            type: "admin"
                         })
                     });
                     const data = await response.json();
@@ -118,50 +95,29 @@
                         $(location).prop("href", data.message);
                     }
                 } else {
-                    // Handle normal login
-                    if (email === "admin@mail.com") {
+                    const { user, error } = await supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+                    if (error) {
+                        alert(error.message);
+                    } else {
                         const response = await fetch("/login", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
                             },
                             body: JSON.stringify({
-                                email: email,
-                                password: password,
-                                type: "admin"
+                                type: "user"
                             })
                         });
                         const data = await response.json();
+                        console.log(data);
                         if (!response.ok) {
                             alert(data.message);
                         } else {
                             $(location).prop("href", data.message);
-                        }
-                    } else {
-                        const { user, error } = await supabaseClient.auth.signInWithPassword({
-                            email: email,
-                            password: password
-                        });
-
-                        if (error) {
-                            alert(error.message);
-                        } else {
-                            const response = await fetch("/login", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                    type: "user"
-                                })
-                            });
-                            const data = await response.json();
-                            console.log(data);
-                            if (!response.ok) {
-                                alert(data.message);
-                            } else {
-                                $(location).prop("href", data.message);
-                            }
                         }
                     }
                 }
@@ -173,8 +129,8 @@
                 $("#password").attr("type", type);
                 $(this).toggleClass("fa-eye fa-eye-slash");
             });
-        });
 
+        });
     </script>
 </body>
 

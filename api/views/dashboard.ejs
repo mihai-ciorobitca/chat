@@ -1,199 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth h-100" style="font-weight: bold;">
-
+<html lang="en" class="scroll-smooth h-100" style="overflow: hidden;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <style>
-        body {
-            color: #ffffff;
-            background-color: #121212;
-        }
-
-        .chat-sidebar {
-            background-color: #1a202c;
-            border-color: #4a5568;
-        }
-
-        .messages {
-            height: calc(100vh - 100px);
-            overflow-y: auto;
-            background-color: #262626;
-            display: flex;
-            flex-direction: column-reverse;
-            padding: 15px;
-        }
-
-        .message {
-            padding: 10px 15px;
-            max-width: 60%;
-            border-radius: 7.5px;
-            margin-bottom: 10px;
-            display: inline-block;
-            position: relative;
-            line-height: 1.4;
-            color: #000000;
-            background-color: #444;
-        }
-
-        .message.sent {
-            background-color: #ffd700;
-            margin-left: auto;
-        }
-
-        .message.received {
-            background-color: #ffd700;
-            margin-right: auto;
-        }
-
-        .message-input {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background-color: #121212;
-            border-top: 1px solid #444;
-        }
-
-        .message-input input[type="text"] {
-            background-color: #121212;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            color: #ffffff;
-            border-radius: 20px;
-            margin-right: 10px;
-        }
-
-        .message-input button[type="submit"] {
-            background-color: #25d366;
-            border: none;
-            color: #ffffff;
-            padding: 10px 15px;
-            border-radius: 50%;
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .search-form {
-            padding: 10px;
-        }
-
-        .search-form input[type="text"] {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #444;
-            padding: 10px;
-            width: 100%;
-            color: #ffffff;
-        }
-
-        .list-group-item.active {
-            background-color: #444;
-            border-color: #444;
-        }
-
-        .list-group-item:not(:last-child) {
-            border-bottom: 1px solid #444;
-        }
-
-        .list-group-item i {
-            padding-right: 10px;
-        }
-
-        .list-group-item:hover {
-            background-color: #666;
-            color: #ffffff;
-        }
-
-        .list-group-item {
-            background-color: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            color: #ffffff;
-        }
-
-        .courses {
-            background-color: #ffd700;
-            color: #000000;
-            width: 100%;
-        }
-
-        .scrollable {
-            overflow-y: auto;
-            scrollbar-width: none;
-        }
-
-        .scrollable::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
-        }
-
-        @media (max-width: 768px) {
-            .chat-sidebar {
-                display: none;
-            }
-
-            .chat-sidebar.active {
-                display: block;
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                z-index: 1000;
-                top: 0;
-                left: 0;
-            }
-
-            .chat-content {
-                width: 100%;
-            }
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
-<body class="h-100">
+<body class="h-100 bg-dark">
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <div class="col-md-3 chat-sidebar border-end p-0">
+            <div class="col-md-3 custom-sidebar border-right p-0">
                 <div class="p-3 text-end">
-                    <a href="/dashboard/courses" class="btn courses w-100">
+                    <a href="/dashboard/courses" class="btn btn-warning w-100">
                         <i class="bi bi-house-fill me-2"></i>
-                        <span style="font-weight: bold;">Courses</span>
+                        <span>Courses</span>
                     </a>
                 </div>
-                <form class="search-form">
-                    <input type="text" class="form-control" placeholder="Search groups" style="font-weight: bold;">
+                <form class="search-form p-2">
+                    <input type="text" class="form-control bg-transparent border-0" placeholder="Search groups" aria-label="Search groups">
                 </form>
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active" onclick="toggleChatScreen()">
-                        <i class="bi bi-people-fill"></i>
-                        <span style="font-weight: bold;">Group 1</span>
+                    <a href="#" class="list-group-item list-group-item-action active bg-secondary border-0 text-white d-flex align-items-center" onclick="toggleChatScreen()">
+                        <i class="bi bi-people-fill me-2"></i>
+                        <span>Group 1</span>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action" onclick="toggleChatScreen()">
-                        <i class="bi bi-cpu-fill"></i>
-                        <span style="font-weight: bold;">Group 2</span>
+                    <a href="#" class="list-group-item list-group-item-action bg-transparent border-0 text-white d-flex align-items-center" onclick="toggleChatScreen()">
+                        <i class="bi bi-cpu-fill me-2"></i>
+                        <span>Group 2</span>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action" onclick="toggleChatScreen()">
-                        <i class="bi bi-chat-dots-fill"></i>
-                        <span style="font-weight: bold;">Group 3</span>
+                    <a href="#" class="list-group-item list-group-item-action bg-transparent border-0 text-white d-flex align-items-center" onclick="toggleChatScreen()">
+                        <i class="bi bi-chat-dots-fill me-2"></i>
+                        <span>Group 3</span>
                     </a>
                 </div>
             </div>
             <div class="col-md-9 chat-content h-100 d-flex flex-column p-0">
-                <div class="messages scrollable flex-grow-1">
-                    <div class="message sent" style="font-weight: bold; text-align: right;">Hello, welcome to Group 1!</div>
+                <div class="messages bg-dark p-3 d-flex flex-column-reverse overflow-auto" style="height: calc(100vh - 100px);">
                     <!-- More messages -->
                 </div>
-                <div class="message-input" style="position: sticky;">
-                    <input class="mt-2 mb-4" type="text" placeholder="Type your message" aria-label="Type your message" required>
-                    <button type="submit">
-                        <i class="bi bi-send"></i>
-                    </button>
+                <div class="input-group w-100 p-3 border-top">
+                    <input type="text" class="form-control bg-transparent border text-white flex-grow-1" id="message-input" placeholder="Type your message" aria-label="Message" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-warning" type="button" id="send-message-btn">Send</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -215,18 +66,29 @@
                 });
             });
 
-            $('.message-input input[type="text"]').on('keypress', function (e) {
-                if (e.keyCode === 13) {
-                    e.preventDefault();
-                    $('.message-input button[type="submit"]').click();
+            $('#send-message-btn').on('click', function () {
+                const message = $('#message-input').val();
+                if (message.trim() !== '') {
+                    const messageElement = $('<div class="message rounded p-2 mb-2 bg-warning text-end ms-auto" style="max-width: 75%; word-wrap: break-word; width: fit-content; margin-left: auto;"></div>');
+                    const messageText = $('<p style="word-wrap: break-word;"></p>');
+                    messageText.text(message);
+                    messageElement.append(messageText);
+                    $('.messages').prepend(messageElement);
+                    $('#message-input').val('');
                 }
             });
 
-            $('.message-input button[type="submit"]').on('click', function () {
-                const message = $('.message-input input[type="text"]').val();
-                if (message.trim() !== '') {
-                    $('.messages').prepend('<div class="message sent" style="font-weight: bold; text-align: right;">' + message + '</div>');
-                    $('.message-input input[type="text"]').val('');
+            $('#message-input').on('keyup', function (event) {
+                if (event.key === 'Enter') {
+                    const message = $(this).val();
+                    if (message.trim() !== '') {
+                        const messageElement = $('<div class="message rounded p-2 mb-2 bg-warning text-end ms-auto" style="max-width: 75%; word-wrap: break-word; width: fit-content; margin-left: auto;"></div>');
+                        const messageText = $('<p style="word-wrap: break-word;"></p>');
+                        messageText.text(message);
+                        messageElement.append(messageText);
+                        $('.messages').prepend(messageElement);
+                        $(this).val('');
+                    }
                 }
             });
         });
@@ -244,5 +106,4 @@
 </body>
 
 </html>
-
 

@@ -21,19 +21,18 @@ router.get("/", (req, res) => {
 router.post("/", async (req, res) => {
     const { email, password, type } = req.body;
 
-    if (type == "user") {
+    if (type === "google") {
+        req.session.user = true;
+        res.status(200).json({ message: "/dashboard" });
+    } else if (type == "user") {
         req.session.user = true;
         res.status(200).json({ message: "/dashboard" });
     } else if (email === "admin@mail.com" && password === process.env.ADMIN_PASSWORD) {
         req.session.admin = true;
         res.status(200).json({ message: "/admin" });
     } else {
-        res.status(400).json({ message: "Invalid admin credentials" });
+        res.status(401).json({ message: "Invalid credentials" });
     }
-});
-
-router.post("callback", async (req, res) => {
-    return res.status(200).json({ message: "/login" });
 });
 
 module.exports = router;

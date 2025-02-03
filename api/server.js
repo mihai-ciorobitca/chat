@@ -15,13 +15,11 @@ const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const dashboardRoutes = require('./routes/dashboard');
 const adminRoutes = require('./routes/admin');
-const authRoutes = require('./routes/auth');
 
 app.use('/login', loginRoutes);
 app.use('/register', registerRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/admin', adminRoutes);
-app.use('/auth', authRoutes);
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

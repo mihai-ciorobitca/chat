@@ -1,5 +1,4 @@
 const express = require("express");
-const { createClient } = require("@supabase/supabase-js");
 const dotenv = require("dotenv");
 const session = require("express-session");
 
@@ -31,6 +30,10 @@ router.post("/", async (req, res) => {
     } else {
         res.status(400).json({ message: "Invalid admin credentials" });
     }
+});
+
+router.post("callback", async (req, res) => {
+    return res.status(200).json({ message: "/login" });
 });
 
 module.exports = router;

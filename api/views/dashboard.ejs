@@ -21,10 +21,14 @@
 
         .message {
             width: 100%;
+            word-wrap: break-word;
         }
 
         .message .message-text {
             word-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
         }
 
         .message .message-details {
@@ -38,10 +42,10 @@
     </style>
 </head>
 
-<body class="h-100 bg-dark" >
+<body class="h-100 text-white" style="background-color: #1d2b3a;">
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <div class="col-md-3 custom-sidebar border-right p-0">
+            <div class="col-md-3 custom-sidebar p-0" style="background-color: #1d2e3f;">
                 <div class="p-3 text-end">
                     <a href="/dashboard/courses" class="btn btn-warning w-100">
                         <i class="bi bi-house-fill me-2"></i>
@@ -49,13 +53,13 @@
                     </a>
                 </div>
                 <form class="search-form p-2">
-                    <input type="text" class="form-contr ol bg-transparent border-0" placeholder="Search groups"
+                    <input type="text" class="form-control bg-transparent border-0" placeholder="Search groups"
                         aria-label="Search groups">
                 </form>
                 <div class="list-group">
                     <a href="#"
-                        class="list-group-item list-group-item-action active bg-secondary border-0 text-white d-flex align-items-center"
-                        onclick="toggleChatScreen()">
+                        class="list-group-item list-group-item-action active border-0 text-white d-flex align-items-center"
+                        style="background-color: #2a3a4a;" onclick="toggleChatScreen()">
                         <i class="bi bi-people-fill me-2"></i>
                         <span>Group 1</span>
                     </a>
@@ -74,14 +78,14 @@
                 </div>
             </div>
             <div class="col-md-9 chat-content h-100 d-flex flex-column p-0">
-                <div class="messages bg-dark p-3 d-flex flex-column-reverse overflow-auto"
-                    style="height: calc(100vh - 100px);">
+                <div class="messages p-3 d-flex flex-column-reverse overflow-auto"
+                    style="height: calc(100vh - 100px); background-color: #0d1824;">
                     <!-- More messages -->
                 </div>
-                <div class="input-group w-100 p-3 border-top">
+                <div class="input-group w-100 p-3" style="background-color: #1d2b3a;">
                     <input type="text" class="form-control bg-transparent border text-white flex-grow-1"
                         id="message-input" placeholder="Type your message" aria-label="Message"
-                        aria-describedby="basic-addon2">
+                        aria-describedby="basic-addon2" style="white-space: pre-wrap;">
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="button" id="send-message-btn">Send</button>
                     </div>
@@ -162,8 +166,8 @@
             }
 
             async function displayMessage(message, sender) {
-                const messageElement = $('<div class="message rounded p-2 mb-2 bg-warning text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%;"></div>');
-                const messageText = $('<p class="message-text" style="word-wrap: break-word;"></p>');
+                const messageElement = $('<div class="message rounded p-2 mb-2 text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%; background-color: #1d2e3f; word-wrap: break-word;"></div>');
+                const messageText = $('<p class="message-text"></p>');
                 messageText.text(message);
                 const messageDetails = $('<div class="message-details"></div>');
                 const messageDate = $('<span class="message-date"></span>');
@@ -194,7 +198,7 @@
 
                 $('.messages').empty();
                 data.forEach(msg => {
-                    const messageElement = $('<div class="message rounded p-2 mb-2 bg-warning text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%;"></div>');
+                    const messageElement = $('<div class="message rounded p-2 mb-2 text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%; background-color: #1d2e3f;"></div>');
                     const messageText = $('<p class="message-text" style="word-wrap: break-word;"></p>');
                     messageText.text(msg.message);
                     const messageDetails = $('<div class="message-details"></div>');
@@ -228,4 +232,3 @@
 </body>
 
 </html>
-

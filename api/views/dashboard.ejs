@@ -77,10 +77,10 @@
 
             <!-- Chat Content -->
             <div class="col-md-9 chat-content h-100 d-flex flex-column p-0">
-                <!-- Back button for small screens
+                <!-- Back button for small screens -->
                 <button class="btn btn-warning d-md-none m-3 back-to-groups">
                     <i class="bi bi-arrow-left"></i> Back to Groups
-                </button> -->
+                </button>
 
                 <!-- Messages -->
                 <div class="messages p-3 d-flex flex-column-reverse">
@@ -110,8 +110,8 @@
                 $('.chat-content').addClass('d-flex');
             });
 
-            window.history.pushState({}, null, null);
-            window.addEventListener('popstate', function () {
+            $('.back-to-groups').on('click', function () {
+                console.log("back clicked")
                 $('.custom-sidebar').addClass('d-md-block');
                 $('.custom-sidebar').removeClass('d-none');
                 $('.chat-content').addClass('d-none');

@@ -45,7 +45,11 @@ app.post("/logout", (req, res) => {
         }
         return res.status(200).json({message: "/login"});
     });
-})
+});
+
+app.get("/test", (req, res) => {
+    res.render("test");
+});
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

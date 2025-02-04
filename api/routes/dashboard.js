@@ -27,4 +27,6 @@ router.get("/courses", async (req, res) => {
     return res.redirect("/login");
 });
 
+
+
 module.exports = router;

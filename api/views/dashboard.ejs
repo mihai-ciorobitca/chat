@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth h-100" style="overflow: hidden;">
+<html lang="en" class="scroll-smooth h-100">
 
 <head>
     <meta charset="UTF-8">
@@ -10,18 +10,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <style>
+        body {
+            background-color: #1d2b3a;
+        }
+
         .messages {
             overflow-y: auto;
-            scrollbar-width: none;
+            height: calc(100vh - 100px);
+            background-color: #0d1824;
         }
 
         .messages::-webkit-scrollbar {
             display: none;
-        }
-
-        .message {
-            width: 100%;
-            word-wrap: break-word;
         }
 
         .message .message-text {
@@ -31,61 +31,66 @@
             overflow-wrap: break-word;
         }
 
-        .message .message-details {
-            font-size: 0.8rem;
-            color: #666;
+        .custom-sidebar {
+            background-color: #1d2e3f;
         }
 
-        .message .message-details .message-date {
-            margin-right: 5px;
+        .list-group {
+            background-color: #2a3a4a;
+        }
+
+        .input-group {
+            background-color: #1d2b3a;
         }
     </style>
 </head>
 
-<body class="h-100 text-white" style="background-color: #1d2b3a;">
+<body class="h-100 text-white">
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <div class="col-md-3 custom-sidebar p-0" style="background-color: #1d2e3f;">
+            <!-- Sidebar -->
+            <div class="col-md-3 custom-sidebar p-0 d-md-block d-none">
                 <div class="p-3 text-end">
                     <a href="/dashboard/courses" class="btn btn-warning w-100">
-                        <i class="bi bi-house-fill me-2"></i>
-                        <span>Courses</span>
+                        <i class="bi bi-house-fill me-2"></i> Courses
                     </a>
                 </div>
                 <form class="search-form p-2">
-                    <input type="text" class="form-control bg-transparent border-0" placeholder="Search groups"
-                        aria-label="Search groups">
+                    <input type="text" class="form-control bg-transparent border-0 text-white"
+                        placeholder="Search groups">
                 </form>
-                <div class="list-group">
+                <div class="list-group" style="background-color: #2a3a4a;">
                     <a href="#"
-                        class="list-group-item list-group-item-action active border-0 text-white d-flex align-items-center"
-                        style="background-color: #2a3a4a;" onclick="toggleChatScreen()">
-                        <i class="bi bi-people-fill me-2"></i>
-                        <span>Group 1</span>
+                        class="list-group-item list-group-item-action border-0 text-white d-flex align-items-center bg-transparent group-link">
+                        <i class="bi bi-people-fill me-2"></i> <span>Group 1</span>
                     </a>
                     <a href="#"
-                        class="list-group-item list-group-item-action bg-transparent border-0 text-white d-flex align-items-center"
-                        onclick="toggleChatScreen()">
-                        <i class="bi bi-cpu-fill me-2"></i>
-                        <span>Group 2</span>
+                        class="list-group-item list-group-item-action border-0 text-white d-flex align-items-center bg-transparent group-link">
+                        <i class="bi bi-cpu-fill me-2"></i> <span>Group 2</span>
                     </a>
                     <a href="#"
-                        class="list-group-item list-group-item-action bg-transparent border-0 text-white d-flex align-items-center"
-                        onclick="toggleChatScreen()">
-                        <i class="bi bi-chat-dots-fill me-2"></i>
-                        <span>Group 3</span>
+                        class="list-group-item list-group-item-action border-0 text-white d-flex align-items-center bg-transparent group-link">
+                        <i class="bi bi-chat-dots-fill me-2"></i> <span>Group 3</span>
                     </a>
                 </div>
             </div>
+
+            <!-- Chat Content -->
             <div class="col-md-9 chat-content h-100 d-flex flex-column p-0">
-                <div class="messages p-3 d-flex flex-column-reverse overflow-auto"
-                    style="height: calc(100vh - 100px); background-color: #0d1824;">
-                    <!-- More messages -->
+                <!-- Back button for small screens
+                <button class="btn btn-warning d-md-none m-3 back-to-groups">
+                    <i class="bi bi-arrow-left"></i> Back to Groups
+                </button> -->
+
+                <!-- Messages -->
+                <div class="messages p-3 d-flex flex-column-reverse">
+                    <!-- Messages will be loaded here -->
                 </div>
-                <div class="input-group w-100 p-3" style="background-color: #1d2b3a;">
+
+                <!-- Input Box -->
+                <div class="input-group w-100 p-3">
                     <input type="text" class="form-control bg-transparent border text-white flex-grow-1"
-                        id="message-input" placeholder="Type your message" aria-label="Message"
-                        aria-describedby="basic-addon2" style="white-space: pre-wrap;">
+                        id="message-input" placeholder="Type your message">
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="button" id="send-message-btn">Send</button>
                     </div>
@@ -93,26 +98,37 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-primary d-md-none" onclick="toggleSidebar()">Toggle Sidebar</button>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
     <script>
-        const supabaseUrl = "https://adyyoquqtlopdnqampep.supabase.co"
-        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs"
-        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        $(document).ready(() => {
+            // Show chat and hide sidebar on small screens when a group is clicked
+            $('.group-link').on('click', function (e) {
+                e.preventDefault();
+                $('.custom-sidebar').removeClass('d-md-block');
+                $('.custom-sidebar').addClass('d-none');
+                $('.chat-content').removeClass('d-none');
+                $('.chat-content').addClass('d-flex');
+            });
 
-        const channel = supabaseClient.channel("room1")
+            window.history.pushState({}, null, null);
+            window.addEventListener('popstate', function () {
+                $('.custom-sidebar').addClass('d-md-block');
+                $('.custom-sidebar').removeClass('d-none');
+                $('.chat-content').addClass('d-none');
+                $('.chat-content').removeClass('d-flex');
+            });
 
-        $(document).ready(async () => {
+            const supabaseUrl = "https://adyyoquqtlopdnqampep.supabase.co";
+            const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkeXlvcXVxdGxvcGRucWFtcGVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4ODIzNzMsImV4cCI6MjA1MzQ1ODM3M30.YeYjNactqap6nDbdPBADeVxsvlFSdcO-Js8NFH2G5Bs";
+            const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+            const channel = supabaseClient.channel("room1");
             const groups = $('.list-group-item');
             $('.search-form input[type="text"]').on('input', function () {
                 const searchValue = $(this).val().toLowerCase();
                 groups.each(function () {
                     const groupText = $(this).text().toLowerCase();
-                    if (groupText.includes(searchValue)) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
+                    $(this).toggle(groupText.includes(searchValue));
                 });
             });
 
@@ -136,8 +152,7 @@
 
             channel.on("broadcast", { event: "new-message" }, (data) => {
                 console.log("New message received!", data);
-                const payload = data.payload;
-                displayMessage(payload.message, payload.sender);
+                displayMessage(data.payload.message, data.payload.sender);
             }).subscribe((status) => {
                 if (status === "SUBSCRIBED") {
                     console.log("Subscribed to messages channel");
@@ -145,18 +160,16 @@
             });
 
             async function sendMessage(message) {
-                const { data, error } = await supabaseClient
+                const { error } = await supabaseClient
                     .from('messages')
-                    .insert([
-                        { sender: 'user', message: message, group: 'Group 1' }
-                    ]);
+                    .insert([{ sender: 'user', message: message, group: 'Group 1' }]);
 
                 if (error) {
                     console.error('Error sending message:', error);
                     return;
                 }
 
-                await displayMessage(message, 'user');
+                displayMessage(message, 'user');
 
                 channel.send({
                     type: "broadcast",
@@ -165,69 +178,46 @@
                 });
             }
 
-            async function displayMessage(message, sender) {
-                const messageElement = $('<div class="message rounded p-2 mb-2 text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%; background-color: #1d2e3f; word-wrap: break-word;"></div>');
-                const messageText = $('<p class="message-text"></p>');
-                messageText.text(message);
-                const messageDetails = $('<div class="message-details"></div>');
-                const messageDate = $('<span class="message-date"></span>');
-                messageDate.text(new Date().toLocaleTimeString());
-                const messageSender = $('<span class="message-sender"></span>');
-                messageSender.text(sender);
-                messageDetails.append(messageSender, messageDate);
-                messageElement.append(messageText, messageDetails);
+            function displayMessage(message, sender) {
+                const messageElement = $(`
+                    <div class="message rounded p-2 mb-2 text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%; background-color: #1d2e3f; word-wrap: break-word;">
+                        <p class="message-text">${message}</p>
+                        <div class="message-details">
+                            <span class="message-sender">${sender}</span>
+                            <span class="message-date">${new Date().toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                `);
 
-                const messageContainer = $('<div class="d-flex align-items-center mb-2"></div>');
-                messageContainer.append(messageElement);
-
-                $('.messages').prepend(messageContainer);
+                $('.messages').prepend($('<div class="d-flex align-items-center mb-2"></div>').append(messageElement));
             }
 
-
             async function fetchMessages() {
-                const { data, error } = await supabaseClient
-                    .from('messages')
-                    .select();
-
+                const { data, error } = await supabaseClient.from('messages').select();
                 if (error) {
                     console.error('Error fetching messages:', error);
                     return;
                 }
 
-                console.log(data);
-
-                $('.messages').empty();
+                const messagesContainer = $('.messages');
+                messagesContainer.empty();
                 data.forEach(msg => {
-                    const messageElement = $('<div class="message rounded p-2 mb-2 text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%; background-color: #1d2e3f;"></div>');
-                    const messageText = $('<p class="message-text" style="word-wrap: break-word;"></p>');
-                    messageText.text(msg.message);
-                    const messageDetails = $('<div class="message-details"></div>');
-                    const messageDate = $('<span class="message-date"></span>');
-                    messageDate.text(new Date(msg.created_at).toLocaleTimeString());
-                    const messageSender = $('<span class="message-sender"></span>');
-                    messageSender.text(msg.sender);
-                    messageDetails.append(messageSender, messageDate);
-                    messageElement.append(messageText, messageDetails);
+                    const messageElement = $(`
+                        <div class="message rounded p-2 mb-2 text-end ms-auto d-flex align-items-center" style="width: 100%; max-width: 100%; background-color: #1d2e3f;">
+                            <p class="message-text">${msg.message}</p>
+                            <div class="message-details">
+                                <span class="message-sender">${msg.sender}</span>
+                                <span class="message-date">${new Date(msg.created_at).toLocaleTimeString()}</span>
+                            </div>
+                        </div>
+                    `);
 
-                    const messageContainer = $('<div class="d-flex align-items-center mb-2"></div>');
-                    messageContainer.append(messageElement);
-
-                    $('.messages').prepend(messageContainer);
+                    messagesContainer.prepend($('<div class="d-flex align-items-center mb-2"></div>').append(messageElement));
                 });
             }
 
             fetchMessages();
         });
-
-        function toggleSidebar() {
-            $('.chat-sidebar').toggleClass('active');
-        }
-
-        function toggleChatScreen() {
-            if (window.innerWidth <= 768) {
-                $('.chat-sidebar').removeClass('active');
-            }
-        }
     </script>
 </body>
 
